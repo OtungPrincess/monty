@@ -44,14 +44,12 @@ void pchar(stack_t **stack, unsigned int mline)
 	if (!stack || !*stack)
 	{
 		dprintf(STDERR_FILENO, "L%u: can't pchar, stack empty\n", mline);
-		free_monty();
 		exit(EXIT_FAILURE);
 	}
 
 	if ((*stack)->n < 0 || (*stack)->n > 127)
 	{
 		dprintf(STDERR_FILENO, "L%u: can't pchar, value out of range\n", mline);
-		free_monty();
 		exit(EXIT_FAILURE);
 	}
 
@@ -64,19 +62,23 @@ void pchar(stack_t **stack, unsigned int mline)
  * @stack: first node in the list
  * @mline: current line
  */
-void pstr(stack_t **stack, unsigned int mline)
+void pstr(stack_t **stack, unsigned int mline __attribute__ ((unused)))
 {
 	stack_t *tmp;
-	(void) mline;
+	int ch;
 
 	tmp = *stack;
-	while (tmp && (tmp->n > 0 && tmp->n <= 127))
+	while (tmp != NULL)
 	{
-		printf("%c", tmp->n);
-		tmp = tmp->next;
+		ch = tmp->n;
+	if (!isascii(ch) || ch == 0)
+	break;
+	putchar(ch);
+	tmp = tmp->next;
+	if (tmp == *stack)
+	break;
 	}
-
-	printf("\n");
+	putchar('\n');
 }
 
 /**
