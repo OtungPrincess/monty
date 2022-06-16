@@ -6,9 +6,12 @@
  */
 int check_isdigit(char *str)
 {
-	int c;
+	int c = 0;
 
-	for (c = 0; str[c] != '\0'; c++)
+	if (str[c] == '-')
+		c++;
+
+	for (; str[c] != '\0'; c++)
 	{
 		if ((str[c] < '0' || str[c] > '9'))
 			return (0);
