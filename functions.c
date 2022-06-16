@@ -8,7 +8,7 @@
  */
 void push(stack_t **stack, unsigned int mline)
 {
-	stack_t *new_node;
+	stack_t *new_node, *temp = *stack;
 	int val;
 
 	if (!data.arg || !check_isdigit(data.arg))
@@ -31,13 +31,21 @@ void push(stack_t **stack, unsigned int mline)
 		*stack = new_node;
 		return;
 	}
-
 	if (strcmp("stack", data.operate) == 0)	/* for (LIFO) */
 	{
 		(*stack)->prev = new_node;
 		new_node->next = *stack;
 		*stack = new_node;
 		return;
+	}
+	if (!(*stack)->next)	/* for queue (FIFO) */
+		temp->next = new_node, new_node->prev = temp;
+	else
+	{
+		while (temp->next)
+			temp = temp->next;
+
+		temp->next = new_node, new_node->prev = temp;
 	}
 
 }
