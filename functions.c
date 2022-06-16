@@ -59,10 +59,10 @@ void push(stack_t **stack, unsigned int mline)
 void pall(stack_t **stack, unsigned int mline)
 {
 	stack_t *tmp;
-	(void)mline;
+	(void) mline;
 
 	tmp = *stack;
-	while (tmp)
+	while (tmp != NULL)
 	{
 		printf("%d\n", tmp->n);
 		tmp = tmp->next;
